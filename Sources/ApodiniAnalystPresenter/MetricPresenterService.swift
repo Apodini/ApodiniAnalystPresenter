@@ -39,33 +39,13 @@ open class MetricPresenterService<M: Analyst.Metric>: PresenterService {
         }
 
         return results.map { results in
-            GraphCard(configuration: self.configuration, results: results)
+            GraphCard(configuration: Color.systemColorGraphConfiguration, results: results)
                 .view(title: self.title, subtitle: "")
         }
     }
     
     var eventLoop: EventLoop {
         metricsProvider.client.eventLoopGroup.next()
-    }
-    
-    var configuration: GraphConfiguration {
-        PrometheusGraphConfiguration(styles:
-            colors.map { color in
-                (.line(.init(.quadCurve, color: color, width: 2)), color)
-            }
-        )
-    }
-
-    var colors: [Color] {
-        [
-            .systemBlue,
-            .systemIndigo,
-            .systemOrange,
-            .systemPink,
-            .systemPurple,
-            .systemRed,
-            .systemTeal
-        ]
     }
     
     
