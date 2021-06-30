@@ -1,8 +1,8 @@
 import XCTest
-@testable import ApodiniCollector
+@testable import ApodiniAnalystPresenter
 
 
-final class ApodiniCollectorTests: XCTestCase {
+final class ApodiniAnalystPresenterTests: XCTestCase {
     func testExample() throws {
         XCTAssertTrue(true)
     }

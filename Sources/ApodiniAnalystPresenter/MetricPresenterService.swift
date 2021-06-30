@@ -2,7 +2,6 @@ import Apodini
 import ApodiniAsyncHTTPClient
 import AnalystPresenter
 import PrometheusAnalyst
-import PrometheusCollector
 
 
 open class MetricPresenterService<M: Analyst.Metric>: PresenterService {
