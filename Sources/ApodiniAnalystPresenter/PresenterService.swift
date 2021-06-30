@@ -28,7 +28,7 @@ fileprivate struct PresenterServiceStorageKey: StorageKey {
 
 
 extension Apodini.Application {
-    public internal(set) var presenterService: PresenterService {
+    public var presenterService: PresenterService {
         get {
             guard let presenterService = self.storage[PresenterServiceStorageKey.self] else {
                 fatalError("You need to add a configuration corresponding to a PresenterService to the WebService configuration to use the presenterService in the Environment")
