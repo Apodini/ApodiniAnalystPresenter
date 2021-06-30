@@ -26,7 +26,8 @@ let package = Package(
                 .product(name: "Apodini", package: "Apodini"),
                 .product(name: "ApodiniAsyncHTTPClient", package: "ApodiniAsyncHTTPClient"),
                 .product(name: "AnalystPresenter", package: "Analyst"),
-                .product(name: "PrometheusAnalyst", package: "Analyst")
+                .product(name: "PrometheusAnalyst", package: "Analyst"),
+                .product(name: "JaegerAnalyst", package: "Analyst")
             ]
         ),
         .testTarget(
