@@ -57,7 +57,6 @@ open class MetricPresenterService<M: Analyst.Metric>: PresenterService {
         title: String? = nil
     ) {
         Presenter.use(plugin: AnalystPresenter())
-        Presenter.use(view: CoderView.self)
 
         self.metricsProvider = Prometheus(
             baseURL: prometheusURL,
