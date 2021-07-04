@@ -1,26 +1,46 @@
-# Apodini Collector
+# Apodini Analyst Presenter
 
-`ApodiniCollector` combines [Collector](https://github.com/Apodini/Collector) with the [Apodini](https://github.com/Apodini/Apodini) framework used to create web services. it allows you to create trace spans, record metrics, and provide them to Prometheus instances.
+`ApodiniAnalystPresenter` combines [Analyst](https://github.com/Apodini/Analyst) and [Presenter](https://github.com/Apodini/Presenter) with the [Apodini](https://github.com/Apodini/Apodini) framework used to create web services.
 
-## Traces
+## Using Apodini Analyst Presenter
 
-Apodini Collector provides integration in Apodini to configure and create trace spans in the web service. You can create a `TracerConfiguration` that defines global settings for the traces in the `WebService` configuration.
+The framework defines the `PresenterService` protocol:
+```swift
+public protocol PresenterService {
+    var view: ViewFuture { get }
+}
+```
+`PresenterService` protocol instances need to provide a Presenter `View` (`_CodableView`).  
+Instances conforming to this protocol can be injected in the Apodini `@Environment` and retrieved using `@Environment(\.presenterService) var presenterService: PresenterService` in `Handler` instances.
+
+The `PresenterHandler` provides a reusable implementation of an Apodini `Handler` that offers the view returned in a `PresenterService`.
+
+Developers wanting to use [Analyst](https://github.com/Apodini/Analyst) and [Presenter](https://github.com/Apodini/Presenter) in combination with [Apodini](https://github.com/Apodini/Apodini) can create types conforming to `PresenterService` to that can be served to consumers using Apodini endpoints.
+
+## Metrics Presenter Service
+
+`MetricPresenterService` is a reference implementation conforming to `PresenterService` that showcases a `PresenterService` that presents a view showcasing a user-defined `Metric`. Developers can configure and create the `MetricPresenterService` using the `MetricsPresenterConfiguration` as defined below:
 ```swift
 import Apodini
-import ApodiniCollector
+import ApodiniAnalystPresenter
 import ArgumentParser
 import Foundation
 
 
 @main
-struct ExampleWebService: WebService {
-    @Option var jaegerCollectorURL = URL(string: "http://localhost:14250")! // swiftlint:disable:this force_unwrapping
+struct ProcessingWebService: WebService {
+    @Option var prometheusURL = URL(string: "http://localhost:9092")!
     
     
     var configuration: Apodini.Configuration {
-        TracerConfiguration(
-            serviceName: "example",
-            jaegerURL: jaegerCollectorURL
+        // Configure the UI Metrics Service with the passed in arguments
+        MetricsPresenterConfiguration(
+            prometheusURL: prometheusURL,
+            metric: Counter(
+                label: "hotspots_usage",
+                dimensions: ["job": "processing", "path": "user/{id}/hotspots"]
+            ),
+            title: "Processing"
         )
         
         // ...
@@ -28,71 +48,13 @@ struct ExampleWebService: WebService {
 
     
     var content: some Component {
-        Group("metrics") {
-            MetricsHandler()
-        }
         // ...
     }
 }
 ```
-
-By using Apodini Collector, you can access the current tracer using the Apodini `@Environment`: `@Environment(\.tracer) var tracer: Tracer`
-
-Apodini Collector exposes the tracing API defined in [Collector](https://github.com/Apodini/Collector) and allows you to propargate the spans in HTTPRequests of [AsyncHTTPClient](https://github.com/AsyncHttpClient/async-http-client/) or propargated in Apodini `Responses`:
-```swift
-var request = try HTTPClient.Request(url: "http://ase.in.tum.de/schmiedmayer")
-let span = tracer.span(name: "Example")
-span.propagate(in: &request)
-```
-
-In addition spans can be retrieved from [AsyncHTTPClient](https://github.com/AsyncHttpClient/async-http-client/) responses or the Apodini connection context:
-```swift
-import Apodini
-import ApodiniCollector
-
-
-struct ExampleHandler: Handler {
-    @Environment(\.tracer) var tracer: Tracer
-    @Environment(\.connection) var connection: Connection
-    
-    
-    func handle() -> String {
-        let span = tracer.span(name: "location", from: connection)
-        // ...
-    }
-```
-
-
-
-## Metrics
-
-Apodini Collector exports the metrics creation API defined by the [Collector](https://github.com/Apodini/Collector) framework.
-
-In addition to exporting the [Collector](https://github.com/Apodini/Collector) API surface Apodini Collector provides a `MetricsHandler` `Handler` enabling Prometheus instances to retrieve metrics information from the web service instance:
-```swift
-import Apodini
-import ApodiniCollector
-
-
-@main
-struct ExampleWebService: WebService {
-    var configuration: Apodini.Configuration {
-        // ...
-    }
-
-    
-    var content: some Component {
-        Group("metrics") {
-            MetricsHandler()
-        }
-        // ...
-    }
-}
-```
-
 
 ## Contributing
 Contributions to this project are welcome. Please make sure to read the [contribution guidelines](https://github.com/Apodini/.github/blob/release/CONTRIBUTING.md) first.
 
 ## License
-This project is licensed under the MIT License. See [License](https://github.com/Apodini/ApodiniCollector/blob/release/LICENSE) for more information.
+This project is licensed under the MIT License. See [License](https://github.com/Apodini/ApodiniAnalystPresenter/blob/release/LICENSE) for more information.
