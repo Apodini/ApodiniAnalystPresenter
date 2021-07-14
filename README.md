@@ -1,5 +1,10 @@
 # Apodini Analyst Presenter
 
+[![DOI](https://zenodo.org/badge/381726479.svg)](https://zenodo.org/badge/latestdoi/381726479)
+[![codecov](https://codecov.io/gh/Apodini/ApodiniAnalystPresenter/branch/develop/graph/badge.svg?token=bYHXoQcvuK)](https://codecov.io/gh/Apodini/ApodiniAnalystPresenter)
+[![jazzy](https://raw.githubusercontent.com/Apodini/ApodiniAnalystPresenter/gh-pages/badge.svg)](https://apodini.github.io/ApodiniAnalystPresenter/)
+[![Build and Test](https://github.com/Apodini/ApodiniAnalystPresenter/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/Apodini/ApodiniAnalystPresenter/actions/workflows/build-and-test.yml)
+
 `ApodiniAnalystPresenter` combines [Analyst](https://github.com/Apodini/Analyst) and [Presenter](https://github.com/Apodini/Presenter) with the [Apodini](https://github.com/Apodini/Apodini) framework used to create web services.
 
 ## Using Apodini Analyst Presenter
@@ -54,7 +59,7 @@ struct ProcessingWebService: WebService {
 ```
 
 ## Contributing
-Contributions to this project are welcome. Please make sure to read the [contribution guidelines](https://github.com/Apodini/.github/blob/release/CONTRIBUTING.md) first.
+Contributions to this project are welcome. Please make sure to read the [contribution guidelines](https://github.com/Apodini/.github/blob/main/CONTRIBUTING.md) and the [contributor covenant code of conduct](https://github.com/Apodini/.github/blob/main/CODE_OF_CONDUCT.md) first.
 
 ## License
-This project is licensed under the MIT License. See [License](https://github.com/Apodini/ApodiniAnalystPresenter/blob/release/LICENSE) for more information.
+This project is licensed under the MIT License. See [License](https://github.com/Apodini/ApodiniAnalystPresenter/blob/develop/LICENSE) for more information.
