@@ -22,7 +22,7 @@ SPDX-License-Identifier: MIT
 The framework defines the `PresenterService` protocol:
 ```swift
 public protocol PresenterService {
-    var view: ViewFuture { get }
+    var view: _CodableView { get async throws }
 }
 ```
 `PresenterService` protocol instances need to provide a Presenter `View` (`_CodableView`).  
