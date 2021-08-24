@@ -60,8 +60,8 @@ extension Color {
     }
     /// A `GraphConfiguration` with all `systemColors`
     public static var systemColorGraphConfiguration: GraphConfiguration {
-        PrometheusGraphConfiguration(styles:
-            systemColors.map { color in
+        PrometheusGraphConfiguration(
+            styles: systemColors.map { color in
                 (.line(.init(.quadCurve, color: color, width: 2)), color)
             }
         )
