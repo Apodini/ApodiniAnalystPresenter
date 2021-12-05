@@ -15,8 +15,7 @@ let package = Package(
             targets: ["ApodiniAnalystPresenter"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Apodini/Apodini.git", .upToNextMinor(from: "0.2.0")),
-        .package(url: "https://github.com/Apodini/ApodiniAsyncHTTPClient.git", from: "0.1.1"),
+        .package(url: "https://github.com/Apodini/Apodini.git", from: "0.2.0"),
         .package(url: "https://github.com/Apodini/Analyst.git", .branch("kraft")),
         .package(url: "https://github.com/Apodini/Presenter.git", .branch("kraft")),
     ],
@@ -43,7 +42,6 @@ let package = Package(
             name: "ApodiniAnalystPresenter",
             dependencies: [
                 .product(name: "Apodini", package: "Apodini"),
-                .product(name: "ApodiniAsyncHTTPClient", package: "ApodiniAsyncHTTPClient"),
                 .target(name: "AnalystPresenter"),
                 .product(name: "PrometheusAnalyst", package: "Analyst"),
                 .product(name: "JaegerAnalyst", package: "Analyst")

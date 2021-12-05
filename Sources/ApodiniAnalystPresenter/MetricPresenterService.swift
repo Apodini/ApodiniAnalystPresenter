@@ -1,5 +1,4 @@
 import Apodini
-import ApodiniAsyncHTTPClient
 import AnalystPresenter
 import PrometheusAnalyst
 
