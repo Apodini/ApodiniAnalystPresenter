@@ -3,30 +3,30 @@ import Foundation
 import NIO
 import Presenter
 
-
-public typealias ViewFuture = EventLoopFuture<_CodableView>
-
-
+@available(macOS 12, *)
 public protocol PresenterService {
-    var view: ViewFuture { get }
+    var view: View { get async throws }
 }
 
 
+@available(macOS 12, *)
 extension PresenterService {
-    public var encodedView: EventLoopFuture<Blob> {
-        view.flatMapThrowing {
-            let data = try Presenter.encode(CoderView($0))
+    public var encodedView: Blob {
+        get async throws {
+            let view = try await self.view
+            let data = try Presenter.encode(CoderView(view))
             return Blob(data, type: .application(.json))
         }
     }
 }
 
 
+@available(macOS 12, *)
 fileprivate struct PresenterServiceStorageKey: StorageKey {
     typealias Value = PresenterService
 }
 
-
+@available(macOS 12, *)
 extension Apodini.Application {
     public var presenterService: PresenterService {
         get {
